@@ -54,7 +54,7 @@
 }
 
 body {
-    @apply text-surface-900 text-sm;
+    @apply text-surface-900 dark:text-surface-0 dark:bg-surface-950 text-sm transition-colors duration-200;
     font-family: Inter, sans-serif;
     /* font-family: InterDisplay, sans-serif; */
     font-feature-settings: "cv09" on, "cv03" on, "cv02" on, "dlig" on, "cv06" on, "cv01" on, "liga" off, "calt" off;

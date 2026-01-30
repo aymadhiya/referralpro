@@ -1,6 +1,8 @@
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import PrimeVue from 'primevue/config';
+import 'primeicons/primeicons.css';
+import ToastService from 'primevue/toastservice';
 import { MyPreset } from '@/utils/preset.js'
 import { setConfig, frappeRequest, resourcesPlugin } from 'frappe-ui'
 import VueApexCharts from "vue3-apexcharts";
@@ -27,7 +29,7 @@ app.use(FrappeUI)
 app.use(PrimeVue, {
     theme: {
         preset: MyPreset,
-        darkModeSelector: "[data-theme='dark']",
+        darkModeSelector: '.dark',
         options: {
             cssLayer: {
                 name: 'primevue',
@@ -36,5 +38,6 @@ app.use(PrimeVue, {
         }
     }
 });
+app.use(ToastService);
 
 app.mount('#app')

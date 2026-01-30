@@ -1,174 +1,289 @@
 {
- "actions": [],
- "creation": "2023-01-23 16:51:00",
- "doctype": "DocType",
- "engine": "InnoDB",
- "field_order": [
-  "organization_name",
-  "organization_code",
-  "email",
-  "phone",
-  "column_break_xhug",
-  "type",
-  "organization_type",
-  "currency",
-  "timezoe",
-  "status",
-  "plan_info_section",
-  "trial_end_date",
-  "column_break_siku",
-  "billing_cycle",
-  "address_info_section",
-  "full_address",
-  "address_line_1",
-  "address_line_2",
-  "column_break_rurd",
-  "suburb",
-  "country",
-  "pincode"
- ],
- "fields": [
-  {
-   "fieldname": "organization_name",
-   "fieldtype": "Data",
-   "in_list_view": 1,
-   "label": "Organization Name",
-   "reqd": 1
-  },
-  {
-   "fieldname": "organization_code",
-   "fieldtype": "Data",
-   "label": "Organization Code",
-   "unique": 1
-  },
-  {
-   "fieldname": "type",
-   "fieldtype": "Select",
-   "label": "Type",
-   "options": "Individual\nCompany"
-  },
-  {
-   "fieldname": "organization_type",
-   "fieldtype": "Select",
-   "label": "Organization Type",
-   "options": "Agency\nReferral Partner"
-  },
-  {
-   "fieldname": "email",
-   "fieldtype": "Data",
-   "label": "Email"
-  },
-  {
-   "fieldname": "phone",
-   "fieldtype": "Data",
-   "label": "Phone"
-  },
-  {
-   "fieldname": "full_address",
-   "fieldtype": "Data",
-   "label": "Full Address"
-  },
-  {
-   "fieldname": "address_line_1",
-   "fieldtype": "Data",
-   "label": "Address Line 1"
-  },
-  {
-   "fieldname": "address_line_2",
-   "fieldtype": "Data",
-   "label": "Address Line 2"
-  },
-  {
-   "fieldname": "suburb",
-   "fieldtype": "Data",
-   "label": "Suburb"
-  },
-  {
-   "fieldname": "country",
-   "fieldtype": "Link",
-   "label": "Country",
-   "options": "Country"
-  },
-  {
-   "fieldname": "pincode",
-   "fieldtype": "Data",
-   "label": "Postal Code"
-  },
-  {
-   "fieldname": "currency",
-   "fieldtype": "Link",
-   "label": "Currency",
-   "options": "Currency"
-  },
-  {
-   "fieldname": "timezoe",
-   "fieldtype": "Data",
-   "label": "Timezone"
-  },
-  {
-   "fieldname": "status",
-   "fieldtype": "Select",
-   "label": "Status",
-   "options": "Active\nSuspended\nTrial"
-  },
-  {
-   "fieldname": "trial_end_date",
-   "fieldtype": "Date",
-   "label": "Trial End Date"
-  },
-  {
-   "fieldname": "billing_cycle",
-   "fieldtype": "Select",
-   "label": "Billing Cycle",
-   "options": "Monthly\nYearly"
-  },
-  {
-   "fieldname": "address_info_section",
-   "fieldtype": "Section Break",
-   "label": "Address Info"
-  },
-  {
-   "fieldname": "column_break_rurd",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "column_break_xhug",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "plan_info_section",
-   "fieldtype": "Section Break",
-   "label": "Plan Info"
-  },
-  {
-   "fieldname": "column_break_siku",
-   "fieldtype": "Column Break"
-  }
- ],
- "index_web_pages_for_search": 1,
- "links": [],
- "modified": "2026-01-24 17:48:47.990620",
- "modified_by": "Administrator",
- "module": "Referral Pro",
- "name": "Organization",
- "naming_rule": "By script",
- "owner": "Administrator",
- "permissions": [
-  {
-   "create": 1,
-   "delete": 1,
-   "email": 1,
-   "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "System Manager",
-   "share": 1,
-   "write": 1
-  }
- ],
- "row_format": "Dynamic",
- "sort_field": "modified",
- "sort_order": "DESC",
- "states": []
+    "actions": [],
+    "creation": "2023-01-23 16:51:00",
+    "doctype": "DocType",
+    "engine": "InnoDB",
+    "field_order": [
+        "organization_name",
+        "partner_name",
+        "organization_code",
+        "email",
+        "phone",
+        "status",
+        "agency",
+        "column_break_xhug",
+        "type",
+        "organization_type",
+        "currency",
+        "timezoe",
+        "plan_info_section",
+        "trial_end_date",
+        "column_break_siku",
+        "billing_cycle",
+        "referral_partner_info_section",
+        "onboarding_status",
+        "agreement_template",
+        "tier",
+        "column_break_pxyb",
+        "partner_status",
+        "address_info_section",
+        "full_address",
+        "address_line_1",
+        "address_line_2",
+        "column_break_rurd",
+        "suburb",
+        "country",
+        "pincode",
+        "branding_section",
+        "logo",
+        "light_logo",
+        "favicon",
+        "column_break_brand",
+        "brand_color",
+        "theme_mode"
+    ],
+    "fields": [
+        {
+            "fieldname": "organization_name",
+            "fieldtype": "Data",
+            "in_list_view": 1,
+            "label": "Organization Name",
+            "reqd": 1
+        },
+        {
+            "fieldname": "partner_name",
+            "fieldtype": "Data",
+            "in_list_view": 1,
+            "label": "Partner Name"
+        },
+        {
+            "fieldname": "organization_code",
+            "fieldtype": "Data",
+            "label": "Organization Code",
+            "unique": 1
+        },
+        {
+            "fieldname": "type",
+            "fieldtype": "Select",
+            "in_list_view": 1,
+            "label": "Type",
+            "options": "Individual\nCompany"
+        },
+        {
+            "fieldname": "organization_type",
+            "fieldtype": "Select",
+            "in_list_view": 1,
+            "label": "Organization Type",
+            "options": "Agency\nReferral Partner"
+        },
+        {
+            "fieldname": "email",
+            "fieldtype": "Data",
+            "in_list_view": 1,
+            "label": "Email"
+        },
+        {
+            "fieldname": "phone",
+            "fieldtype": "Data",
+            "label": "Phone"
+        },
+        {
+            "fieldname": "full_address",
+            "fieldtype": "Data",
+            "label": "Full Address"
+        },
+        {
+            "fieldname": "address_line_1",
+            "fieldtype": "Data",
+            "label": "Address Line 1"
+        },
+        {
+            "fieldname": "address_line_2",
+            "fieldtype": "Data",
+            "label": "Address Line 2"
+        },
+        {
+            "fieldname": "suburb",
+            "fieldtype": "Data",
+            "label": "Suburb"
+        },
+        {
+            "fieldname": "country",
+            "fieldtype": "Link",
+            "label": "Country",
+            "options": "Country"
+        },
+        {
+            "fieldname": "pincode",
+            "fieldtype": "Data",
+            "label": "Postal Code"
+        },
+        {
+            "fieldname": "currency",
+            "fieldtype": "Link",
+            "label": "Currency",
+            "options": "Currency"
+        },
+        {
+            "fieldname": "timezoe",
+            "fieldtype": "Data",
+            "label": "Timezone"
+        },
+        {
+            "fieldname": "status",
+            "fieldtype": "Select",
+            "in_list_view": 1,
+            "label": "Status",
+            "options": "Active\nSuspended\nTrial"
+        },
+        {
+            "fieldname": "onboarding_status",
+            "fieldtype": "Select",
+            "label": "Onboarding Status",
+            "options": "Invited\nPending Director Setup\nPending Agreement\nCompleted"
+        },
+        {
+            "fieldname": "trial_end_date",
+            "fieldtype": "Date",
+            "label": "Trial End Date"
+        },
+        {
+            "fieldname": "billing_cycle",
+            "fieldtype": "Select",
+            "label": "Billing Cycle",
+            "options": "Monthly\nYearly"
+        },
+        {
+            "fieldname": "address_info_section",
+            "fieldtype": "Section Break",
+            "label": "Address Info"
+        },
+        {
+            "fieldname": "column_break_rurd",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "column_break_xhug",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "plan_info_section",
+            "fieldtype": "Section Break",
+            "label": "Plan Info"
+        },
+        {
+            "fieldname": "column_break_siku",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "branding_section",
+            "fieldtype": "Section Break",
+            "label": "Branding"
+        },
+        {
+            "fieldname": "logo",
+            "fieldtype": "Attach Image",
+            "label": "Logo"
+        },
+        {
+            "fieldname": "light_logo",
+            "fieldtype": "Attach Image",
+            "label": "Light Logo"
+        },
+        {
+            "fieldname": "favicon",
+            "fieldtype": "Attach Image",
+            "label": "Favicon"
+        },
+        {
+            "fieldname": "column_break_brand",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "brand_color",
+            "fieldtype": "Color",
+            "label": "Brand Color"
+        },
+        {
+            "default": "System",
+            "fieldname": "theme_mode",
+            "fieldtype": "Select",
+            "label": "Theme Mode",
+            "options": "System\nLight\nDark"
+        },
+        {
+            "depends_on": "eval: doc.organization_type == 'Referral Partner'",
+            "fieldname": "partner_status",
+            "fieldtype": "Select",
+            "label": "Partner Status",
+            "options": "Invite Sent\nAccept\nDeactive"
+        },
+        {
+            "fieldname": "agency",
+            "fieldtype": "Link",
+            "label": "Agency",
+            "options": "Organization",
+            "read_only": 1
+        },
+        {
+            "fieldname": "referral_partner_info_section",
+            "fieldtype": "Section Break",
+            "label": "Referral Partner Info"
+        },
+        {
+            "fieldname": "agreement_template",
+            "fieldtype": "Link",
+            "label": "Agreement Template",
+            "options": "Agreement Template"
+        },
+        {
+            "depends_on": "eval: doc.organization_type == 'Referral Partner'",
+            "fieldname": "tier",
+            "fieldtype": "Link",
+            "label": "Tier",
+            "options": "Referral Partner Tier"
+        },
+        {
+            "fieldname": "column_break_pxyb",
+            "fieldtype": "Column Break"
+        }
+    ],
+    "index_web_pages_for_search": 1,
+    "links": [],
+    "modified": "2026-01-29 18:12:18.683538",
+    "modified_by": "Administrator",
+    "module": "Referral Pro",
+    "name": "Organization",
+    "naming_rule": "By script",
+    "owner": "Administrator",
+    "permissions": [
+        {
+            "create": 1,
+            "delete": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "System Manager",
+            "share": 1,
+            "write": 1
+        },
+        {
+            "create": 1,
+            "delete": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "Agency Owner",
+            "share": 1,
+            "write": 1
+        }
+    ],
+    "row_format": "Dynamic",
+    "sort_field": "modified",
+    "sort_order": "DESC",
+    "states": []
 }

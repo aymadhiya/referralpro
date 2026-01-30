@@ -2,7 +2,7 @@ import { fileURLToPath, URL } from 'node:url'
 
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
-import vueDevTools from 'vite-plugin-vue-devtools'
+// import vueDevTools from 'vite-plugin-vue-devtools'
 import frappeui from 'frappe-ui/vite'
 import path from 'path'
 // https://vite.dev/config/
@@ -20,7 +20,7 @@ export default defineConfig({
 
     }),
     vue(),
-    vueDevTools(),
+    // vueDevTools(),
     {
       name: 'transform-index.html',
       transformIndexHtml(html, context) {

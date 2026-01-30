@@ -2,6 +2,9 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { createResource } from 'frappe-ui'
+import Dropdown from 'primevue/dropdown'
+import InputText from 'primevue/inputtext'
+import Button from 'primevue/button'
 
 const router = useRouter()
 const form = ref({
@@ -38,6 +41,7 @@ const handleSignup = async () => {
     method: 'POST',
     params: {
         organization: form.value.agencyName,
+        org_type: form.value.agencyType,
         email: form.value.email,
         full_name: form.value.adminName,
         mobile_no: form.value.phone
@@ -65,8 +69,8 @@ const handleSignup = async () => {
 </script>
 
 <template>
-  <div class="min-h-screen flex items-center justify-center bg-slate-50/50 font-sans py-12">
-    <div class="bg-white p-10 rounded-[2rem] shadow-[0_10px_40px_-10px_rgba(0,0,0,0.1)] w-full max-w-[440px] border border-slate-50">
+  <div class="min-h-screen flex items-center justify-center bg-surface-50 font-sans py-12">
+    <div class="bg-surface-0 p-10 rounded-[2rem] shadow-[0_10px_40px_-10px_rgba(0,0,0,0.1)] w-full max-w-[440px] border border-surface-200 dark:border-surface-800">
       
       <!-- Top Logo Section -->
       <div class="flex flex-col items-center justify-center mb-8">
@@ -74,12 +78,12 @@ const handleSignup = async () => {
             <div class="w-12 h-12 bg-[#3b82f6] rounded-xl flex items-center justify-center shadow-[0_8px_16px_-4px_rgba(59,130,246,0.5)]">
             <span class="text-white text-2xl font-black">R</span>
             </div>
-            <h1 class="text-[28px] font-bold text-[#0f172a] tracking-tight">Referral Portal</h1>
+            <h1 class="text-[28px] font-bold text-surface-900 dark:text-surface-0 tracking-tight">Referral Portal</h1>
         </div>
-        <h2 class="text-lg font-bold text-[#0f172a] tracking-tight">Create Agency Workspace</h2>
+        <h2 class="text-lg font-bold text-surface-900 dark:text-surface-0 tracking-tight">Create Agency Workspace</h2>
       </div>
 
-       <div v-if="errorMessage" class="mb-4 p-3 bg-red-50 text-red-600 rounded-lg text-sm font-medium text-center">
+       <div v-if="errorMessage" class="mb-4 p-3 bg-red-50 text-red-600 dark:text-red-400 rounded-lg text-sm font-medium text-center">
         {{ errorMessage }}
       </div>
 
@@ -91,14 +95,13 @@ const handleSignup = async () => {
             <InputText 
                 id="agencyName"
                 v-model="form.agencyName" 
-                placeholder="e.g. Zenith Marketing" 
                 class="w-full"
                 :invalid="submitted && !form.agencyName"
             />
         </div>
 
          <!-- Agency Type -->
-        <!-- <div>
+        <div>
             <label for="agencyType" class="form-label">Agency Type</label>
              <Dropdown 
                 id="agencyType"
@@ -107,9 +110,9 @@ const handleSignup = async () => {
                 optionLabel="name" 
                 optionValue="value"
                 placeholder="Select a Type" 
-                class="w-full"
+                class="w-full h-[42px] flex items-center"
             />
-        </div> -->
+        </div>
 
         <!-- Admin Full Name -->
         <div>
@@ -117,7 +120,6 @@ const handleSignup = async () => {
             <InputText 
                 id="adminName"
                 v-model="form.adminName" 
-                placeholder="John Doe" 
                 class="w-full"
                 :invalid="submitted && !form.adminName"
             />
@@ -129,7 +131,6 @@ const handleSignup = async () => {
             <InputText 
                 id="email"
                 v-model="form.email" 
-                placeholder="john@zenith.com" 
                 class="w-full"
                 :invalid="submitted && !form.email"
             />
@@ -141,7 +142,6 @@ const handleSignup = async () => {
             <InputText 
                 id="phone"
                 v-model="form.phone" 
-                placeholder="+1 234 567 8900" 
                 class="w-full"
                 :invalid="submitted && !form.phone"
             />
@@ -163,8 +163,8 @@ const handleSignup = async () => {
       </form>
 
       <!-- Footer -->
-      <div class="mt-8 pt-6 border-t border-slate-50 text-center">
-        <p class="text-sm font-medium text-slate-500">
+      <div class="mt-8 pt-6 border-t border-surface-100 dark:border-surface-800 text-center">
+        <p class="text-sm font-medium text-surface-500 dark:text-surface-400">
           Already have an account? 
           <router-link to="/agency/login" class="text-blue-600 font-bold hover:underline transition-all ml-1">
             Sign In

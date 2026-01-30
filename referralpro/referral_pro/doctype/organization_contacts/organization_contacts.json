@@ -1,0 +1,177 @@
+{
+ "actions": [],
+ "creation": "2024-01-29 11:30:00",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "firstname",
+  "lastname",
+  "email",
+  "phone",
+  "organization",
+  "column_break_hqmo",
+  "referral_partner",
+  "agreement_template",
+  "agreement_recevied_date",
+  "status",
+  "is_primary",
+  "sign_info_section",
+  "is_required_signed",
+  "signer_name",
+  "signer_email",
+  "column_break_oevp",
+  "signed_date",
+  "signed",
+  "signature_image"
+ ],
+ "fields": [
+  {
+   "fieldname": "organization",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Organization",
+   "options": "Organization",
+   "reqd": 1
+  },
+  {
+   "fieldname": "referral_partner",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Referral Partner",
+   "options": "Organization",
+   "reqd": 1
+  },
+  {
+   "fieldname": "email",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Email"
+  },
+  {
+   "fieldname": "phone",
+   "fieldtype": "Data",
+   "label": "Phone"
+  },
+  {
+   "fieldname": "agreement_template",
+   "fieldtype": "Link",
+   "label": "Agreement Template",
+   "options": "Agreement Template"
+  },
+  {
+   "fieldname": "agreement_recevied_date",
+   "fieldtype": "Datetime",
+   "in_list_view": 1,
+   "label": "Agreement Received Date"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_primary",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Is Primary"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Status",
+   "options": "Invited\nAgreement Pending\nActive\nBlocked"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_required_signed",
+   "fieldtype": "Check",
+   "label": "Is Required Signed?"
+  },
+  {
+   "fieldname": "signer_name",
+   "fieldtype": "Data",
+   "label": "Signer Name"
+  },
+  {
+   "fieldname": "signer_email",
+   "fieldtype": "Data",
+   "label": "Signer Email"
+  },
+  {
+   "default": "0",
+   "fieldname": "signed",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Signed"
+  },
+  {
+   "fieldname": "signed_date",
+   "fieldtype": "Datetime",
+   "in_list_view": 1,
+   "label": "Signed Date"
+  },
+  {
+   "fieldname": "firstname",
+   "fieldtype": "Data",
+   "label": "First Name"
+  },
+  {
+   "fieldname": "lastname",
+   "fieldtype": "Data",
+   "label": "Last Name"
+  },
+  {
+   "fieldname": "signature_image",
+   "fieldtype": "Attach Image",
+   "label": "Signature Image"
+  },
+  {
+   "fieldname": "column_break_hqmo",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "sign_info_section",
+   "fieldtype": "Section Break",
+   "label": "Sign Info"
+  },
+  {
+   "fieldname": "column_break_oevp",
+   "fieldtype": "Column Break"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-01-29 16:54:07.612433",
+ "modified_by": "Administrator",
+ "module": "Referral Pro",
+ "name": "Organization Contacts",
+ "naming_rule": "Random",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Agency Owner",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

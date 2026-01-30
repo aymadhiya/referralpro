@@ -7,9 +7,22 @@ class Organization(Document):
 		if frappe.db.exists("Organization", {"organization_name": self.organization_name, "name": ["!=", self.name]}):
 			frappe.throw(_("Organization Name must be unique"))
 
+	def before_insert(self):
+		self.set_default_agreement_template()
+
 	def after_insert(self):
 		self.create_user()
 		self.create_default_team()
+
+	def set_default_agreement_template(self):
+		if self.organization_type == "Referral Partner" and self.agency and not self.agreement_template:
+			# Fetch default agreement template for the Agency
+			default_template = frappe.db.get_value("Agreement Template", 
+				{"organization": self.agency, "is_default": 1}, 
+				"name"
+			)
+			if default_template:
+				self.agreement_template = default_template
 
 	def create_user(self):
 		# Create a new user if it doesn't exist
@@ -30,8 +43,12 @@ class Organization(Document):
 			user_doc.flags.no_welcome_mail = True
 			
 			# Check if Agency Owner role exists, otherwise might need another default
-			if frappe.db.exists("Role", "Agency Owner"):
-				user_doc.append("roles", {"role": "Agency Owner"})
+			role = "Agency Owner"
+			if self.organization_type == "Referral Partner":
+				role = "Referral Partner"
+			
+			if frappe.db.exists("Role", role):
+				user_doc.append("roles", {"role": role})
 			
 			user_doc.flags.ignore_permissions = True
 			user_doc.insert()
@@ -40,8 +57,12 @@ class Organization(Document):
 			# User exists, check if role is present
 			user_doc = frappe.get_doc("User", user)
 			existing_roles = [r.role for r in user_doc.roles]
-			if "Agency Owner" not in existing_roles and frappe.db.exists("Role", "Agency Owner"):
-				user_doc.append("roles", {"role": "Agency Owner"})
+
+			role = "Agency Owner"
+			if self.organization_type == "Referral Partner":
+				role = "Referral Partner"			
+			if role not in existing_roles and frappe.db.exists("Role", role):
+				user_doc.append("roles", {"role": role})
 				user_doc.flags.ignore_permissions = True
 				user_doc.save()
 			
@@ -67,3 +88,35 @@ class Organization(Document):
 		
 		team.flags.ignore_permissions = True
 		team.insert()
+
+	@frappe.whitelist()
+	def send_agreement_emails(self):
+		"""
+		Sends agreement emails to all directors who haven't signed yet.
+		"""
+		if self.organization_type != "Referral Partner":
+			frappe.throw(_("This action is only available for Referral Partners"))
+
+		contacts = frappe.get_all("Organization Contacts", 
+			filters={
+				"referral_partner": self.name,
+				"is_required_signed": 1,
+				"signed": 0
+			},
+			fields=["name"]
+		)
+
+		if not contacts:
+			frappe.msgprint(_("No pending agreements found to send."))
+			return
+
+		count = 0
+		for c in contacts:
+			contact_doc = frappe.get_doc("Organization Contacts", c.name)
+			try:
+				contact_doc.send_agreement_email()
+				count += 1
+			except Exception:
+				pass # Continue to next or log
+
+		frappe.msgprint(_("Agreement emails sent to {0} directors.").format(count))

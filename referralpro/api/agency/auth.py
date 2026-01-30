@@ -2,7 +2,7 @@ import frappe
 from frappe import _
 
 @frappe.whitelist(allow_guest=True, methods=["POST"])
-def signup(email: str, full_name: str, mobile_no: str, organization: str):
+def signup(email: str, full_name: str, mobile_no: str, organization: str, org_type: str = "Company"):
 	"""
 	Signup for Agency.
 	Creates a User and an Organization linked to that user.
@@ -27,10 +27,14 @@ def signup(email: str, full_name: str, mobile_no: str, organization: str):
 		# User creation is now handled in Organization's controller
 		org = frappe.new_doc("Organization")
 		org.organization_name = organization
-		org.type = "Company"
+		org.type = org_type
 		org.email = email
 		org.phone = mobile_no
 		org.organization_type = 'Agency'
+		
+		# For Agencies, default to Completed unless there's a platform-level requirement
+		# (Currently platform-level requirement is not defined, so defaulting to Completed)
+		org.onboarding_status = "Completed"
 		
 		# Pass user details for after_insert creation
 		org.first_name = first_name
@@ -38,6 +42,20 @@ def signup(email: str, full_name: str, mobile_no: str, organization: str):
 		
 		org.flags.ignore_permissions = True
 		org.insert()
+
+		# If Individual, create a contact record
+		if org_type == "Individual":
+			contact = frappe.new_doc("Organization Contacts")
+			contact.organization = org.name # For Agency, it is its own organization
+			contact.referral_partner = org.name
+			contact.firstname = first_name
+			contact.lastname = last_name
+			contact.email = email
+			contact.phone = mobile_no
+			contact.is_primary = 1
+			contact.status = "Active"
+			contact.flags.ignore_permissions = True
+			contact.insert()
 
 		# Send welcome email for password setting
 		org.reload()

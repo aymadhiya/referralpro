@@ -1,0 +1,102 @@
+{
+    "actions": [],
+    "autoname": "hash",
+    "creation": "2026-01-29 12:00:00",
+    "doctype": "DocType",
+    "engine": "InnoDB",
+    "field_order": [
+        "organization",
+        "label",
+        "fieldname",
+        "fieldtype",
+        "options",
+        "is_required",
+        "sequence"
+    ],
+    "fields": [
+        {
+            "fieldname": "organization",
+            "fieldtype": "Link",
+            "label": "Organization",
+            "options": "Organization",
+            "reqd": 1
+        },
+        {
+            "fieldname": "label",
+            "fieldtype": "Data",
+            "in_list_view": 1,
+            "label": "Label",
+            "reqd": 1
+        },
+        {
+            "fieldname": "fieldname",
+            "fieldtype": "Data",
+            "in_list_view": 1,
+            "label": "Fieldname",
+            "reqd": 1
+        },
+        {
+            "fieldname": "fieldtype",
+            "fieldtype": "Select",
+            "in_list_view": 1,
+            "label": "Field Type",
+            "options": "Data\nInt\nFloat\nSelect\nSmall Text\nDate",
+            "reqd": 1
+        },
+        {
+            "fieldname": "options",
+            "fieldtype": "Small Text",
+            "label": "Options"
+        },
+        {
+            "default": "0",
+            "fieldname": "is_required",
+            "fieldtype": "Check",
+            "in_list_view": 1,
+            "label": "Is Required"
+        },
+        {
+            "fieldname": "sequence",
+            "fieldtype": "Int",
+            "in_list_view": 1,
+            "label": "Sort Order"
+        }
+    ],
+    "index_web_pages_for_search": 1,
+    "links": [],
+    "modified": "2026-01-29 12:00:00",
+    "modified_by": "Administrator",
+    "module": "Referral Pro",
+    "name": "Referral Custom Field",
+    "owner": "Administrator",
+    "permissions": [
+        {
+            "create": 1,
+            "delete": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "System Manager",
+            "share": 1,
+            "write": 1
+        },
+        {
+            "create": 1,
+            "delete": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "Agency Owner",
+            "share": 1,
+            "write": 1
+        }
+    ],
+    "row_format": "Dynamic",
+    "sort_field": "sequence",
+    "sort_order": "ASC",
+    "states": []
+}

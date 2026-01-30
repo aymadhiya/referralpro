@@ -1,0 +1,65 @@
+{
+ "app": "referralpro",
+ "creation": "2026-01-24 21:01:17.631953",
+ "docstatus": 0,
+ "doctype": "Workspace Sidebar",
+ "header_icon": "gift",
+ "idx": 0,
+ "items": [
+  {
+   "child": 0,
+   "collapsible": 1,
+   "icon": "organization",
+   "indent": 0,
+   "keep_closed": 0,
+   "label": "Organization",
+   "link_to": "Organization",
+   "link_type": "DocType",
+   "show_arrow": 0,
+   "type": "Link"
+  },
+  {
+   "child": 0,
+   "collapsible": 1,
+   "icon": "users",
+   "indent": 0,
+   "keep_closed": 0,
+   "label": "Organization Team",
+   "link_to": "Organization Team",
+   "link_type": "DocType",
+   "show_arrow": 0,
+   "type": "Link"
+  },
+  {
+   "child": 0,
+   "collapsible": 1,
+   "icon": "arrow-right-from-line",
+   "indent": 0,
+   "keep_closed": 0,
+   "label": "Referral Partner Invitation",
+   "link_to": "Referral Partner Invitation",
+   "link_type": "DocType",
+   "show_arrow": 0,
+   "type": "Link"
+  },
+  {
+   "child": 0,
+   "collapsible": 1,
+   "icon": "square-user",
+   "indent": 0,
+   "keep_closed": 0,
+   "label": "Organization Contacts",
+   "link_to": "Organization Contacts",
+   "link_type": "DocType",
+   "show_arrow": 0,
+   "type": "Link"
+  }
+ ],
+ "modified": "2026-01-28 20:28:04.351493",
+ "modified_by": "Administrator",
+ "module": "Referral Pro",
+ "name": "Referral Pro",
+ "owner": "Administrator",
+ "standard": 1,
+ "title": "Referral Pro"
+}

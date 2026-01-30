@@ -1,0 +1,139 @@
+{
+    "actions": [],
+    "allow_rename": 1,
+    "creation": "2025-01-27 12:05:00.000000",
+    "default_view": "List",
+    "doctype": "DocType",
+    "editable_grid": 1,
+    "engine": "InnoDB",
+    "field_order": [
+        "organization",
+        "tier",
+        "lead_status",
+        "section_break_calc",
+        "calculation_metric",
+        "calculation_period",
+        "section_break_comm",
+        "commission_type",
+        "value",
+        "is_tiered",
+        "thresholds"
+    ],
+    "fields": [
+        {
+            "fieldname": "organization",
+            "fieldtype": "Link",
+            "in_list_view": 1,
+            "label": "Organization",
+            "options": "Organization",
+            "reqd": 1
+        },
+        {
+            "fieldname": "tier",
+            "fieldtype": "Link",
+            "in_list_view": 1,
+            "label": "Tier",
+            "options": "Referral Partner Tier",
+            "reqd": 1
+        },
+        {
+            "fieldname": "lead_status",
+            "fieldtype": "Link",
+            "in_list_view": 1,
+            "label": "Lead Status",
+            "options": "Lead Status",
+            "reqd": 1
+        },
+        {
+            "fieldname": "section_break_calc",
+            "fieldtype": "Section Break",
+            "label": "Calculation Setup"
+        },
+        {
+            "default": "Lead Count",
+            "fieldname": "calculation_metric",
+            "fieldtype": "Select",
+            "label": "Calculation Metric",
+            "options": "Lead Count\nTotal Deal Value",
+            "reqd": 1
+        },
+        {
+            "default": "Monthly",
+            "fieldname": "calculation_period",
+            "fieldtype": "Select",
+            "label": "Calculation Period",
+            "options": "Monthly\nQuarterly\nYearly\nLifetime",
+            "reqd": 1
+        },
+        {
+            "fieldname": "section_break_comm",
+            "fieldtype": "Section Break",
+            "label": "Commission Value"
+        },
+        {
+            "default": "Percentage",
+            "depends_on": "eval:!doc.is_tiered",
+            "fieldname": "commission_type",
+            "fieldtype": "Select",
+            "in_list_view": 1,
+            "label": "Commission Type",
+            "options": "Percentage\nFixed Amount"
+        },
+        {
+            "depends_on": "eval:!doc.is_tiered",
+            "fieldname": "value",
+            "fieldtype": "Currency",
+            "in_list_view": 1,
+            "label": "Value"
+        },
+        {
+            "default": "0",
+            "fieldname": "is_tiered",
+            "fieldtype": "Check",
+            "label": "Is Tiered (Range Based)?"
+        },
+        {
+            "depends_on": "eval:doc.is_tiered",
+            "fieldname": "thresholds",
+            "fieldtype": "Table",
+            "label": "Threshold Ranges",
+            "options": "Commission Rule Threshold"
+        }
+    ],
+    "index_web_pages_for_search": 1,
+    "links": [],
+    "modified": "2025-01-27 12:05:00.000000",
+    "modified_by": "Administrator",
+    "module": "Referral Pro",
+    "name": "Commission Rule",
+    "owner": "Administrator",
+    "permissions": [
+        {
+            "create": 1,
+            "delete": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "System Manager",
+            "share": 1,
+            "write": 1
+        },
+        {
+            "create": 1,
+            "delete": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "Agency Owner",
+            "share": 1,
+            "write": 1
+        }
+    ],
+    "sort_field": "modified",
+    "sort_order": "DESC",
+    "states": []
+}

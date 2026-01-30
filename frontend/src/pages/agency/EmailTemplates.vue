@@ -3,12 +3,13 @@ import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { Plus, Mail, MoreHorizontal, Search } from 'lucide-vue-next'
 import { createListResource } from 'frappe-ui'
+import Button from 'primevue/button'
 
 const router = useRouter()
 
 const templates = createListResource({
   doctype: 'Email Template',
-  fields: ['name', 'subject', 'response', 'modified'],
+  fields: ['name', 'template_name', 'subject', 'response', 'modified'],
   orderBy: 'modified desc'
 })
 
@@ -33,13 +34,12 @@ const editTemplate = (id) => {
         <h1 class="text-3xl font-bold text-slate-900 tracking-tight">Email Templates</h1>
         <p class="text-slate-500 mt-1">Manage email templates for automated communications.</p>
       </div>
-      <button 
+      <Button 
         @click="createNew"
-        class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-xl text-sm font-semibold transition-all shadow-lg shadow-blue-200 flex items-center gap-2"
-      >
-        <Plus :size="18" />
-        Create Template
-      </button>
+        label="Create Template"
+        icon="pi pi-plus"
+        class="shadow-lg"
+      />
     </div>
 
     <!-- Search (Placeholder) -->
@@ -49,7 +49,7 @@ const editTemplate = (id) => {
             <input 
                 type="text" 
                 placeholder="Search templates..." 
-                class="w-full pl-10 pr-4 py-2.5 bg-white border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
+                class="w-full pl-10 pr-4 py-2.5 bg-white border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 transition-all"
             >
         </div>
     </div>
@@ -63,14 +63,17 @@ const editTemplate = (id) => {
         @click="editTemplate(template.name)"
       >
         <div class="flex justify-between items-start mb-4">
-            <div class="p-3 bg-indigo-50 text-indigo-600 rounded-xl group-hover:bg-indigo-600 group-hover:text-white transition-colors">
+            <div class="p-3 bg-primary-50 text-primary-600 rounded-xl group-hover:bg-primary-600 group-hover:text-white transition-colors">
                 <Mail :size="24" />
             </div>
-            <button class="text-slate-400 hover:text-slate-600 p-1 rounded-lg hover:bg-slate-50">
-                <MoreHorizontal :size="20" />
-            </button>
+            <Button 
+                icon="pi pi-ellipsis-h"
+                text
+                severity="secondary"
+                class="!p-2 hover:bg-surface-50"
+            />
         </div>
-        <h3 class="font-bold text-slate-900 mb-1 truncate">{{ template.name }}</h3>
+        <h3 class="font-bold text-slate-900 mb-1 truncate">{{ template.template_name || template.name }}</h3>
         <p class="text-sm text-slate-500 mb-4 truncate">{{ template.subject }}</p>
         
         <p class="text-xs text-slate-400">Last updated {{ template.modified.split(" ")[0] }}</p>
@@ -84,12 +87,12 @@ const editTemplate = (id) => {
         </div>
         <h3 class="text-lg font-bold text-slate-900 mb-1">No templates found</h3>
         <p class="text-slate-500 text-sm mb-6 max-w-xs text-center">Create your first email template to streamline your communication.</p>
-        <button 
+        <Button 
             @click="createNew"
-            class="text-blue-600 font-bold text-sm hover:underline"
-        >
-            Create New Template
-        </button>
+            label="Create New Template"
+            text
+            class="font-bold underline"
+        />
     </div>
   </div>
 </template>

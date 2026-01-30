@@ -6,23 +6,18 @@ import InputText from 'primevue/inputtext'
 import Password from 'primevue/password'
 import Button from 'primevue/button'
 import Message from 'primevue/message'
+import { useSessionStore } from '../../store/session'
 
 const router = useRouter()
+const sessionStore = useSessionStore()
 const email = ref('')
 const password = ref('')
 const loading = ref(false)
-const error = ref('')
 
 const handleLogin = async () => {
   loading.value = true
-  error.value = ''
   try {
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1500))
-    console.log('Logging in as Referral Partner:', email.value)
-    // router.push('/partner/dashboard')
-  } catch (err) {
-    error.value = 'Invalid credentials. Please try again.'
+    await sessionStore.login(email.value, password.value, '/partner/dashboard')
   } finally {
     loading.value = false
   }
@@ -30,33 +25,32 @@ const handleLogin = async () => {
 </script>
 
 <template>
-  <div class="min-h-screen flex items-center justify-center bg-slate-50/50 font-sans px-4">
-    <div class="bg-white p-10 rounded-[2rem] shadow-[0_10px_40px_-10px_rgba(0,0,0,0.1)] w-full max-w-[440px] border border-slate-50">
+  <div class="min-h-screen flex items-center justify-center bg-surface-50 font-sans px-4">
+    <div class="bg-surface-0 p-8 rounded-xl shadow-lg w-full max-w-[440px] border border-surface-200 dark:border-surface-800">
       
       <!-- Top Logo Section -->
-      <div class="flex items-center justify-center gap-4 mb-10">
-        <div class="w-12 h-12 bg-emerald-600 rounded-xl flex items-center justify-center shadow-[0_8px_16px_-4px_rgba(5,150,105,0.5)]">
+      <div class="flex flex-col items-center justify-center gap-4 mb-10">
+        <div class="w-12 h-12 bg-emerald-600 rounded-lg flex items-center justify-center">
           <Stars class="text-white w-7 h-7" />
         </div>
-        <h1 class="text-[28px] font-bold text-[#0f172a] tracking-tight">Partner Portal</h1>
+        <h1 class="text-2xl font-bold text-surface-900 dark:text-surface-0 tracking-tight">Partner Portal</h1>
       </div>
 
       <form @submit.prevent="handleLogin" class="space-y-6">
         <!-- Email Field -->
         <div class="space-y-2">
-          <label for="email" class="block text-sm font-semibold text-slate-600 ml-1">Partner Email</label>
+          <label for="email" class="block text-sm font-semibold text-surface-600 dark:text-surface-400 ml-1">Partner Email</label>
           <InputText 
             id="email"
             v-model="email" 
-            class="w-full rounded-2xl border-slate-200 py-3.5 px-5 text-slate-700 bg-white focus:border-emerald-400 transition-all placeholder:text-slate-300 font-medium"
-            placeholder="example@mail.com"
+            class="w-full"
           />
         </div>
 
         <!-- Password Field -->
         <div class="space-y-2">
           <div class="flex justify-between items-center px-1">
-            <label for="password" class="block text-sm font-semibold text-slate-600">Password</label>
+            <label for="password" class="block text-sm font-semibold text-surface-600 dark:text-surface-400">Password</label>
             <a href="#" class="text-[13px] font-bold text-emerald-600 hover:text-emerald-700 transition-colors">Forgot?</a>
           </div>
           <Password 
@@ -65,30 +59,27 @@ const handleLogin = async () => {
             :feedback="false"
             toggleMask
             class="w-full"
-            inputClass="w-full rounded-2xl border-slate-200 py-3.5 px-5 text-slate-700 bg-white focus:border-emerald-400 transition-all font-medium"
-            placeholder="••••••••"
+            inputClass="w-full"
           />
         </div>
 
-        <!-- Submit Button -->
         <div class="pt-4">
           <Button 
             type="submit" 
             :loading="loading"
-            class="w-full bg-[#0f172a] hover:bg-slate-900 border-none text-white font-bold py-4 rounded-2xl shadow-lg shadow-slate-200 transition-all duration-300"
-          >
-            <span class="text-lg text-emerald-50">Sign In</span>
-          </Button>
+            label="Sign In"
+            class="w-full"
+          />
         </div>
       </form>
 
-      <Message v-if="error" severity="error" variant="simple" class="mt-4 text-sm font-bold text-red-600 px-1 text-center">
-            {{ error }}
+      <Message v-if="sessionStore.error" severity="error" variant="simple" class="mt-4 text-sm font-bold text-red-600 px-1 text-center">
+            {{ sessionStore.error }}
       </Message>
 
       <!-- Agency Login Link -->
-      <div class="mt-8 pt-6 border-t border-slate-50 text-center">
-        <p class="text-sm font-medium text-slate-500">
+      <div class="mt-8 pt-6 border-t border-surface-100 dark:border-surface-800 text-center">
+        <p class="text-sm font-medium text-surface-500 dark:text-surface-400">
           Are you an agency owner?  
           <router-link to="/agency/login" class="text-emerald-600 font-bold hover:underline transition-all ml-1">
             Agency Login
@@ -103,8 +94,5 @@ const handleLogin = async () => {
 <style scoped>
 :deep(.p-password-input) {
   width: 100%;
-}
-:deep(.p-inputtext:focus) {
-    box-shadow: none !important;
 }
 </style>

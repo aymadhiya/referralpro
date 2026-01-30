@@ -1,8 +1,8 @@
 app_name = "referralpro"
 app_title = "Referral Pro"
-app_publisher = "Self"
-app_description = "Referral Management Application"
-app_email = "admin@example.com"
+app_publisher = "Sophicore"
+app_description = "Referral Pro Application"
+app_email = "info@sophicore.com"
 app_license = "mit"
 
 # Apps
@@ -11,15 +11,15 @@ app_license = "mit"
 # required_apps = []
 
 # Each item in the list will be shown as an app in the apps page
-# add_to_apps_screen = [
-# 	{
-# 		"name": "referralpro",
-# 		"logo": "/assets/referralpro/logo.png",
-# 		"title": "Referral Pro",
-# 		"route": "/referralpro",
-# 		"has_permission": "referralpro.api.permission.has_app_permission"
-# 	}
-# ]
+add_to_apps_screen = [
+	{
+		"name": "referralpro",
+		# "logo": "/assets/referralpro/logo.png",
+		"title": "Referral Pro",
+		"route": "/referralpro",
+		# "has_permission": "referralpro.api.permission.has_app_permission"
+	}
+]
 
 # Includes in <head>
 # ------------------

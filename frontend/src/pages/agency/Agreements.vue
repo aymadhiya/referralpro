@@ -1,15 +1,36 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import { Plus, FileText, MoreHorizontal, Search } from 'lucide-vue-next'
-import { createListResource } from 'frappe-ui'
+import { Plus, FileText, MoreHorizontal, Search, CheckCircle } from 'lucide-vue-next'
+import { createListResource, createResource } from 'frappe-ui'
+import Menu from 'primevue/menu'
+import Toast from 'primevue/toast'
+import { useToast } from 'primevue/usetoast'
+import Button from 'primevue/button'
 
 const router = useRouter()
+const toast = useToast()
 
 const templates = createListResource({
   doctype: 'Agreement Template',
-  fields: ['name', 'template_name', 'modified', 'is_active'],
+  fields: ['name', 'template_name', 'modified', 'enabled', 'is_default'],
   orderBy: 'modified desc'
+})
+
+const setDefaultResource = createResource({
+    url: 'frappe.client.set_value',
+    makeParams({ name }) {
+        return {
+            doctype: 'Agreement Template',
+            name: name,
+            fieldname: 'is_default',
+            value: 1
+        }
+    },
+    onSuccess: () => {
+        toast.add({ severity: 'success', summary: 'Success', detail: 'Default template updated', life: 3000 })
+        templates.reload()
+    }
 })
 
 onMounted(() => {
@@ -23,23 +44,71 @@ const createNew = () => {
 const editTemplate = (id) => {
     router.push(`/agency/agreements/builder/${id}`)
 }
+
+const menu = ref(null)
+const selectedTemplate = ref(null)
+
+const deleteResource = createResource({
+    url: 'frappe.client.delete',
+    makeParams({ name }) {
+        return {
+            doctype: 'Agreement Template',
+            name: name
+        }
+    },
+    onSuccess: () => {
+        toast.add({ severity: 'success', summary: 'Success', detail: 'Template deleted', life: 3000 })
+        templates.reload()
+    }
+})
+
+const items = (template) => [
+    {
+        label: 'Edit',
+        icon: 'pi pi-pencil',
+        command: () => editTemplate(template.name)
+    },
+    {
+        label: 'Set as Default',
+        icon: 'pi pi-check-circle',
+        visible: !template.is_default,
+        command: () => setDefaultResource.submit({ name: template.name })
+    },
+    {
+        separator: true
+    },
+    {
+        label: 'Delete',
+        icon: 'pi pi-trash',
+        class: 'text-red-600',
+        command: () => {
+             // Maybe add confirmation dialog here later
+             deleteResource.submit({ name: template.name })
+        }
+    }
+];
+
+const toggleMenu = (event, template) => {
+    selectedTemplate.value = template
+    menu.value.toggle(event)
+}
 </script>
 
 <template>
   <div class="p-8 max-w-[1200px] mx-auto">
+    <Toast />
     <!-- Header -->
     <div class="flex justify-between items-center mb-8">
       <div>
         <h1 class="text-3xl font-bold text-slate-900 tracking-tight">Agreement Templates</h1>
         <p class="text-slate-500 mt-1">Manage your contract and agreement templates.</p>
       </div>
-      <button 
+      <Button 
         @click="createNew"
-        class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-xl text-sm font-semibold transition-all shadow-lg shadow-blue-200 flex items-center gap-2"
-      >
-        <Plus :size="18" />
-        Create Template
-      </button>
+        label="Create Template"
+        icon="pi pi-plus"
+        class="shadow-lg"
+      />
     </div>
 
     <!-- Search & Filters (Placeholder) -->
@@ -59,26 +128,37 @@ const editTemplate = (id) => {
       <div 
         v-for="template in templates.data" 
         :key="template.name"
-        class="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition-all group cursor-pointer"
+        class="bg-white dark:bg-slate-800 p-5 rounded-2xl shadow-sm hover:shadow-md transition-all group cursor-pointer"
         @click="editTemplate(template.name)"
       >
         <div class="flex justify-between items-start mb-4">
-            <div class="p-3 bg-blue-50 text-blue-600 rounded-xl group-hover:bg-blue-600 group-hover:text-white transition-colors">
+            <div class="p-3 bg-primary-50 text-primary-600 rounded-xl group-hover:bg-primary-600 group-hover:text-white transition-colors">
                 <FileText :size="24" />
             </div>
-            <button class="text-slate-400 hover:text-slate-600 p-1 rounded-lg hover:bg-slate-50">
-                <MoreHorizontal :size="20" />
-            </button>
+            <Button 
+                icon="pi pi-ellipsis-h"
+                text
+                severity="secondary"
+                @click.stop="toggleMenu($event, template)"
+                class="!p-2 hover:bg-surface-50"
+            />
         </div>
-        <h3 class="font-bold text-slate-900 mb-1">{{ template.template_name }}</h3>
+        <h5 class="font-bold text-slate-900 mb-1">{{ template.template_name }}</h5>
         <p class="text-xs text-slate-500 mb-4">Last updated {{ template.modified.split(" ")[0] }}</p>
         
         <div class="flex items-center gap-2">
             <span 
                 class="px-2 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider"
-                :class="template.is_active ? 'bg-emerald-50 text-emerald-600' : 'bg-slate-100 text-slate-500'"
+                :class="template.enabled ? 'bg-emerald-50 text-emerald-600' : 'bg-slate-100 text-slate-500'"
             >
-                {{ template.is_active ? 'Active' : 'Draft' }}
+                {{ template.enabled ? 'Active' : 'Draft' }}
+            </span>
+             <span 
+                v-if="template.is_default"
+                class="px-2 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider bg-blue-50 text-blue-600 flex items-center gap-1"
+            >
+                <CheckCircle :size="10" />
+                Default
             </span>
         </div>
       </div>
@@ -91,12 +171,13 @@ const editTemplate = (id) => {
         </div>
         <h3 class="text-lg font-bold text-slate-900 mb-1">No templates found</h3>
         <p class="text-slate-500 text-sm mb-6 max-w-xs text-center">Get started by creating your first agreement template for your partners.</p>
-        <button 
+        <Button 
             @click="createNew"
-            class="text-blue-600 font-bold text-sm hover:underline"
-        >
-            Create New Template
-        </button>
+            label="Create New Template"
+            text
+            class="font-bold underline"
+        />
     </div>
+    <Menu ref="menu" :model="selectedTemplate ? items(selectedTemplate) : []" :popup="true" />
   </div>
 </template>
